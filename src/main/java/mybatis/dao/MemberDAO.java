@@ -39,15 +39,12 @@ public class MemberDAO {
     }
 
     //아이디 중복 체크
-    public static MemVO chk(String id){
-        Map<String, String> map = new HashMap<>();
-        map.put("m_id", id);
-
-        //sql문을 호출하기 위해 필요한 sqlSession얻기
+    public static boolean chk(String id){
+          //sql문을 호출하기 위해 필요한 sqlSession얻기
         SqlSession ss = FactoryService.getFactory().openSession();
         MemVO mvo = ss.selectOne("chk.search", id);
         ss.close();
-        return mvo;
+        return mvo == null;
     }
 
 

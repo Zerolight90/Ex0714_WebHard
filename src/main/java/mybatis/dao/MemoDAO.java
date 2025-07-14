@@ -28,6 +28,7 @@ public class MemoDAO {
         map.put("content", content);
         map.put("ip", ip);
 
+
         //이제 add라는 Mapper를 호출하기 위해 sqlsseion이 필요함
         SqlSession ss = FactoryService.getFactory().openSession(); //openSession(true); 를 한다면 자동컷이 되지만, 별로 좋은 코드는 아니다
 
@@ -41,6 +42,7 @@ public class MemoDAO {
         }
         ss.close();
         return cnt;
+
 
     }
 }

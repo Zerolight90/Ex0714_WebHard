@@ -83,13 +83,17 @@
 </head>
 <body>
 <%
+  //index.jsp에서 현재 페이지로 넘어왔다면 cmd는 null이고,
+  // 그렇지 않고 add_memo.jsp에서 왔다면 cmd는 0아니면 1을 가진다.
   String cmd = request.getParameter("cmd");
   //로그인이 되었는지 알아내야한다.
-  Object obj = session.getAttribute("mvo");
-  if(obj == null){
+  Object object = session.getAttribute("mvo");
+  if(object == null){
     response.sendRedirect("index.jsp");//로그인 실패 시 강제 페이지 이동
+    return; // JSP의 더 이상의 실행을 막음
   }
-  MemVO vo = (MemVO) obj;
+
+  MemVO vo = (MemVO) object;
   String msg = null;
   if(cmd != null && cmd.equals("1")){
     msg = "저장 완료!";
@@ -126,11 +130,14 @@
     </tr>
     </thead>
     <%
+      //현재 메모목록을 가져온다.
       List<MemoVO> list = MemoDAO.getAll();
     %>
     <tbody>
     <%
       if (list != null && list.size() > 0) {
+        //list가 null이 아니고 list.size()가 0보다 크다는 것은
+        // memo테이블로부터 가져온 데이터가 있다는 뜻이다. 그래서 반복문 수행해야 함
         for (MemoVO mvo : list) {
     %>
     <tr>
@@ -140,13 +147,17 @@
       <td><%=mvo.getReg_date() %></td>
     </tr>
     <%
-      }
-    }else {
+      }//for의 끝
+    }else{ //memo_t라는 테이블에 데이터가 없을 때
     %>
     <tr>
-      <td colspan="4" class="txt_center">현재 등록된 데이터가 없습니다.</td>
+      <td colspan="4" class="txt_center">
+        현재 등록된 데이터가 없습니다.
+      </td>
     </tr>
-    <%}%>
+    <%
+      }
+    %>
     </tbody>
   </table>
 </div>
@@ -228,7 +239,7 @@
     }
     if (content.length == 0){
       alert("내용을 입력하세요");
-      $("#content").value = "";
+      $("#content").val("");
       $("#content").focus();
       return;
     }

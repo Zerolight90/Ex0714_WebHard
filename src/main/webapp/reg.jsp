@@ -58,6 +58,10 @@
   </style>
 </head>
 <body>
+<%
+  String m_id = request.getParameter("m_id");
+  String chk = request.getParameter("chk");
+%>
 <article>
   <header>
     <H2>회원가입</H2>
@@ -70,19 +74,15 @@
         <tr>
           <td><label for="u_id">아이디:</label></td>
           <td>
-            <input type="text" id="u_id" name="u_id"/>
+            <input type="text" id="u_id" name="u_id" value="<%if(m_id != null) out.print(m_id);%>"/>
             <button type="button" id="chk_btn">중복확인</button>
             <div id="box">
               <%
-              String mode = request.getParameter("mode");
-                      String msg = "";
-                      if (mode !=null && mode.equals("1")){
-                      msg = "사용불가";
-                      }else if(mode != null && mode.equals("0")){
-                      msg = "사용가능";
-                      }
+                if(chk!=null && chk.equals("1"))
+                  out.print("사용가능");
+                else if(chk!=null && chk.equals("0"))
+                  out.print("사용불가");
               %>
-              <%=msg%>
             </div>
           </td>
         </tr>
