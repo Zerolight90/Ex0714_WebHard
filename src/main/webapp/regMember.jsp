@@ -10,7 +10,7 @@
     for (String str : ar){
       sb.append(str);
       //구분자는 배열 마지막에는 추가 하지 않는다.
-      if (i > ar.length-1){
+      if (i < ar.length-1){
         sb.append(delim);
         i++;
       }
